@@ -1,0 +1,92 @@
+{% extends "portafolio/base.html" %}
+
+{% block title %}
+Inicio - Mi Portafolio
+{% endblock %}
+
+{% block meta_description %}
+Bienvenidos a mi Portafolio
+{% endblock %}
+
+{% block content %}
+<div class="banner">
+    <h1>Portfolio</h1>
+</div>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Mis Proyectos</h1>
+    <!-- Formulario de búsqueda -->
+    <form method="get" action="{% url 'home' %}" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="q" value="{{ request.GET.q }}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+
+    <div class="row mt-3">
+        {% for proyecto in proyectos %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="{{ proyecto.imagen.url }}" class="card-img-top" alt="{{ proyecto.titulo }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ proyecto.titulo }}</h5>
+                        <p class="card-text">{{ proyecto.descripcion }}</p>
+                        <a href="{{ proyecto.enlace }}" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if proyectos.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ proyectos.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            {% endif %}
+            {% for num in proyectos.paginator.page_range %}
+                {% if proyectos.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}<span class="sr-only">(current)</span></span>
+                    </li>
+                {% elif num > proyectos.number|add:'-3' and num < proyectos.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if proyectos.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ proyectos.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ proyectos.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
