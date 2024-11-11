@@ -1,0 +1,9 @@
+SECRET_KEY=django-insecure-ixnzv*k#2j8g6@y&iq!bjg_l188nh0b-y@v8vg(mv8hqx@+@uv
+DJANGO_DEBUG=False
+ENVIRONMENT_RUN=local
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+POSTGRES_DB=AppVac_ECOM
+POSTGRES_USER=Postgres
+POSTGRES_PASSWORD=admin247
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432

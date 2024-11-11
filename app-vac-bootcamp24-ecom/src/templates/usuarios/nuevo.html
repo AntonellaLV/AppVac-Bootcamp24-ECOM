@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+
+
+{% block contenido %}
+    <h1>Nuevo usuario</h1>
+
+    <form method="POST">{% csrf_token %}
+     
+        <!--
+        <p>
+            {{form.atributo1.label}}
+            {{form.atributo1}}
+        </p>
+        -->
+        {% include 'includes/forms_errors.html' with form=formUsuario %}
+        
+        {% comment %}
+        <!--
+        <div class="row">
+            <div class="col">
+                {{formUsuario.first_name.label}}
+                {{formUsuario.first_name}}
+            </div>
+            <div class="col">
+                {{formUsuario.last_name.label}}
+                {{formUsuario.last_name}}
+            </div>
+        </div>
+        -->
+        {% endcomment %}
+
+        {% include 'includes/forms.html' with form=formUsuario %}
+
+        <hr>
+
+        <button type="submit">Guardar</button>
+        <a href="{% url 'usuarios:lista' %}">volver</a>
+    </form>
+{% endblock contenido %}
